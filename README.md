@@ -64,8 +64,8 @@ Consulta a continuación la fecha y los resultados de nuestro escaneo de segurid
 <!-- BEGIN_BENCHMARK_TABLE -->
 | Benchmark | Date | Version | Description | 
 | --------- | ---- | ------- | ----------- | 
-| ![checkov](https://img.shields.io/badge/checkov-passed-green) | 2024-01-15 | 3.2.232 | Escaneo profundo del plan de Terraform en busca de problemas de seguridad y cumplimiento |
-| ![tflint](https://img.shields.io/badge/tflint-passed-green) | 2024-01-15 | 0.50.0 | Análisis estático de código Terraform para mejores prácticas |
+| ![checkov](https://img.shields.io/badge/checkov-passed-green) | 2024-08-14 | 3.2.461 | Escaneo profundo del plan de Terraform en busca de problemas de seguridad y cumplimiento |
+| ![tflint](https://img.shields.io/badge/tflint-passed-green) | 2024-01-15 | 0.58.1 | Análisis estático de código Terraform para mejores prácticas |
 <!-- END_BENCHMARK_TABLE -->
 
 ## Provider Configuration
