@@ -1,0 +1,108 @@
+resource_group_name = {
+  name = "rg-sample-network"
+}
+
+location    = "East US"
+project     = "SampleProject"
+environment = "dev"
+department  = "IT"
+
+vnets = {
+  primary = {
+    address_space = ["10.0.0.0/16"]
+    dns_servers   = ["10.0.0.4", "10.0.0.5"]
+    tags = {
+      Application = "sample-application"
+      Service     = "VNET"
+      Environment = "dev"
+      Criticality = "Medium"
+      Compliance  = "Standard"
+    }
+    enable_flow_logs = false
+  }
+}
+
+vnet_peerings = {
+  hub_connection = {
+    remote_virtual_network_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-hub/providers/Microsoft.Network/virtualNetworks/vnet-hub"
+    allow_forwarded_traffic   = true
+    allow_virtual_network_access = true
+    allow_gateway_transit     = false
+    use_remote_gateways       = false
+  }
+}
+
+route_tables_config = {
+  tags = {
+    Owner       = "SampleTeam"
+    Service     = "SampleNetworking"
+    Environment = "dev"
+    Criticality = "Medium"
+    Compliance  = "Standard"
+  }
+  route_tables = {
+    default_routes = {
+      name = "rt-sample-default"
+      routes = {
+        "internet" = {
+          address_prefix = "0.0.0.0/0"
+          next_hop_type = "Internet"
+        }
+        "internal" = {
+          address_prefix = "10.0.0.0/8"
+          next_hop_type = "VnetLocal"
+        }
+      }
+    }
+  }
+}
+
+subnet_config = {
+  tags = {
+    Owner       = "SampleTeam"
+    Service     = "SampleNetworking"
+    Environment = "dev"
+    Criticality = "Medium"
+    Compliance  = "Standard"
+  }
+  subnets = {
+    web = {
+      address_prefixes = ["10.0.1.0/24"]
+      service_endpoints = ["Microsoft.Storage"]
+      route_table_key = "default_routes"
+      tags = {
+        Tier = "Web"
+      }
+    }
+    app = {
+      address_prefixes = ["10.0.2.0/24"]
+      service_endpoints = ["Microsoft.Storage", "Microsoft.KeyVault"]
+      route_table_key = "default_routes"
+      tags = {
+        Tier = "Application"
+      }
+    }
+    data = {
+      address_prefixes = ["10.0.3.0/24"]
+      service_endpoints = ["Microsoft.Sql", "Microsoft.Storage"]
+      private_endpoint_network_policies_enabled = true
+      route_table_key = "default_routes"
+      tags = {
+        Tier = "Data"
+      }
+    }
+    management = {
+      address_prefixes = ["10.0.10.0/24"]
+      service_endpoints = ["Microsoft.Storage"]
+      tags = {
+        Tier = "Management"
+      }
+    }
+  }
+}
+
+endpoint_key_vault = {
+  is_manual_connection = false
+  name = "kv-sample-dev"
+  subresource_names = ["vault"]
+}
